@@ -44,10 +44,10 @@ public class Moth : ScriptableObject
 
     public static List<Moth> FindMothsWithPair(MothPair targetPair)
     {
-        return GameManager.Instance.AllMoths.Where(moth => moth.PossibleParents.Any(pair =>
-            (pair.FirstMoth == targetPair.FirstMoth && pair.SecondMoth == targetPair.SecondMoth) ||
-            (pair.FirstMoth == targetPair.SecondMoth && pair.SecondMoth == targetPair.FirstMoth)
-        )).ToList();
+        return GameManager.Instance.AllMoths.
+            Where(moth => moth.PossibleParents.
+                Any(pair => pair.Equals(targetPair))).
+            ToList();
     }
 
     public static Moth SelectRandomMoth(List<Moth> potentialMoths, MothPair targetPair)
