@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         AllMoths = Resources.LoadAll<Moth>("ScriptableObjects/Moth").ToList();
-        selectedMoths = new MothPair();
         FirstStart();
     }
 

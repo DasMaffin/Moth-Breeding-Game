@@ -12,14 +12,6 @@ public class MothPair : IEquatable<MothPair>
     [Tooltip("Second required moth type")] public Moth SecondMoth;
     [Tooltip("A weighted value of the chance to pull this moth. Higher weight = Higher chance")] public float Chance;
 
-    public MothPair() { }
-
-    public MothPair(Moth firstMoth, Moth secondMoth)
-    {
-        FirstMoth = firstMoth;
-        SecondMoth = secondMoth;
-    }
-
     public bool Equals(MothPair other)
     {
         if(FirstMoth == other.FirstMoth && SecondMoth == other.SecondMoth ||
