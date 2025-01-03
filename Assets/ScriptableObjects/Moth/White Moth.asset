@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe028aa847a73044bd6dccf9052aacb, type: 3}
   m_Name: White Moth
   m_EditorClassIdentifier: 
-  FriendlyName: Whate Mof
+  FriendlyName: Whity
+  Prefab: {fileID: 1414238178284349243, guid: 8b853147b97918d478024b7b4eba3e29, type: 3}
+  PossibleParents: []

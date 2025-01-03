@@ -21,6 +21,7 @@ public class MothPair
 public class Moth : ScriptableObject
 {
     [Description("The name used in game.")] public string FriendlyName;
+    public GameObject Prefab;
 
     public MothPair[] PossibleParents;
 }

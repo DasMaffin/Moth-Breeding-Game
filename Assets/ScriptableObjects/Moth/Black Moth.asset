@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe028aa847a73044bd6dccf9052aacb, type: 3}
   m_Name: Black Moth
   m_EditorClassIdentifier: 
-  FriendlyName: 
+  FriendlyName: Blacky
+  Prefab: {fileID: 5279111844498559173, guid: f23bd91c59e8bc845a7ed38de1fe8b12, type: 3}
   PossibleParents: []
