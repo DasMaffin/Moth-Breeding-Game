@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
+
     private static GameManager _instance;
 
     public static GameManager Instance
@@ -23,6 +25,8 @@ public class GameManager : MonoBehaviour
             _instance = value;
         }
     }
+
+    #endregion
 
     public List<Moth> AllMoths = new List<Moth>();
 
@@ -47,9 +51,7 @@ public class GameManager : MonoBehaviour
         {
             if(moth.isStandardMoth)
             {
-                GameObject obj = Instantiate(moth.Prefab, new Vector3(xAxis, 0, 0), Quaternion.identity, null);
-                obj.GetComponent<MothController>().self = moth;
-                xAxis += 1;
+                SpawnMoth(moth);
             }
         }
     }
@@ -60,9 +62,16 @@ public class GameManager : MonoBehaviour
 
         Moth moth = Moth.SelectRandomMoth(potentialChilds, selectedMoths);
 
-        GameObject toInstantiate = moth.Prefab;
-        toInstantiate.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        SpawnMoth(moth);
+    }
 
+    public void SpawnMoth(Moth moth, bool isBaby = false)
+    {
+        GameObject toInstantiate = moth.Prefab;
+        if(isBaby)
+        {
+            toInstantiate.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
         GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), Quaternion.identity, null);
         obj.GetComponent<MothController>().self = moth;
         xAxis += 1;
