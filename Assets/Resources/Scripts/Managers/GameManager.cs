@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private GameManager _instance;
+    private static GameManager _instance;
 
-    public GameManager Instance
+    public static GameManager Instance
     {
         get
         {
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     public List<Moth> AllMoths = new List<Moth>();
 
+    public MothPair selectedMoths;
+
     private void Awake()
     {
         _instance = this;
@@ -33,13 +36,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         AllMoths = Resources.LoadAll<Moth>("ScriptableObjects/Moth").ToList();
+        selectedMoths = new MothPair();
         FirstStart();
     }
 
 
+    float xAxis = 0;
     public void FirstStart()
     {
-        float xAxis = 0;
         foreach(Moth moth in AllMoths)
         {
             if(moth.isStandardMoth)
@@ -49,5 +53,19 @@ public class GameManager : MonoBehaviour
                 xAxis += 1;
             }
         }
+    }
+
+    public void BreedMoths()
+    {
+        List<Moth> potentialChilds = Moth.FindMothsWithPair(selectedMoths);
+
+        Moth moth = Moth.SelectRandomMoth(potentialChilds, selectedMoths);
+
+        GameObject toInstantiate = moth.Prefab;
+        toInstantiate.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
+        GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), Quaternion.identity, null);
+        obj.GetComponent<MothController>().self = moth;
+        xAxis += 1;
     }
 }

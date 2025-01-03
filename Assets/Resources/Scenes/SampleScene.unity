@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377b0962a46945741bce1a79d8f5ea03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 2
 --- !u!1 &279334973
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377b0962a46945741bce1a79d8f5ea03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 1
 --- !u!1 &354869154
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +815,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.6
+  m_fontSize: 68
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -910,6 +912,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllMoths: []
+  selectedMoths:
+    FirstMoth: {fileID: 0}
+    SecondMoth: {fileID: 0}
+    Chance: 0
 --- !u!1 &1633570488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1018,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 800, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1844892824
 MonoBehaviour:
@@ -1057,7 +1063,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1844892825}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1525790924}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: BreedMoths
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1844892825
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public int index = 0;
+
     public static event System.Action OnInitSelectEvent;
     public static event System.Action OnSelectMothEvent;
     public static MothSelectionController currentController;
@@ -62,7 +64,6 @@ public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPoin
     private void Update()
     {
         if(!awaitingRaycast) return;
-        print(gameObject);
         if(Input.GetMouseButtonDown(0)) // Detect left mouse click
         {
             awaitingRaycast = false; // Reset the flag
@@ -75,8 +76,16 @@ public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPoin
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Moth")))
         {
-            this.GetComponent<Image>().sprite = hit.collider.gameObject.GetComponent<MothController>().self.MothRepresentation;
-            Debug.Log($"Hit object: {hit.collider.gameObject.name}");
+            Moth moth = hit.collider.gameObject.GetComponent<MothController>().self;
+            this.GetComponent<Image>().sprite = moth.MothRepresentation;
+            if(this.index == 1)
+            {
+                GameManager.Instance.selectedMoths.SetFirstMoth(moth);
+            }
+            else if(this.index == 2)
+            {
+                GameManager.Instance.selectedMoths.SetSecondMoth(moth);
+            }
         }
         else
         {
