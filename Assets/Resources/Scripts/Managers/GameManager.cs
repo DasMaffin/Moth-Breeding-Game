@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
         FirstStart();
     }
 
-
     float xAxis = 0;
     public void FirstStart()
     {
