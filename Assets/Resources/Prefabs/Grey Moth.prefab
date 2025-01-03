@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1897381670122990090}
   - component: {fileID: 8550784572121681068}
   - component: {fileID: 1191443973436761882}
-  m_Layer: 0
+  - component: {fileID: -7403569452348726384}
+  m_Layer: 6
   m_Name: Grey Moth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +109,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7403569452348726384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257676064576430841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7386babd5882b6479205b7a33fcb0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  self: {fileID: 0}

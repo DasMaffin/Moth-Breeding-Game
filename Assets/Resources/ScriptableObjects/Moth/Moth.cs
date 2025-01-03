@@ -1,14 +1,11 @@
-using System;
-using System.ComponentModel;
 using UnityEngine;
-using System.Collections.Generic;
 
 [System.Serializable]
 public class MothPair
 {
-    public Moth FirstMoth;
-    public Moth SecondMoth;
-    public float Chance;
+    [Tooltip("First required moth type")] public Moth FirstMoth;
+    [Tooltip("Second required moth type")] public Moth SecondMoth;
+    [Tooltip("A weighted value of the chance to pull this moth. Higher weight = Higher chance")] public float Chance;
 
     public MothPair(Moth firstMoth, Moth secondMoth)
     {
@@ -20,8 +17,11 @@ public class MothPair
 [CreateAssetMenu(fileName = "New Moth", menuName = "Moth/New Moth", order = 1)]
 public class Moth : ScriptableObject
 {
-    [Description("The name used in game.")] public string FriendlyName;
-    public GameObject Prefab;
+    [Tooltip("The name used in game.")] public string FriendlyName;
+    [Tooltip("The prefab that will be spawned into the game.")] public GameObject Prefab;
+    [Tooltip("2D Image that is used to represent this moth.")] public Sprite MothRepresentation;
 
-    public MothPair[] PossibleParents;
+    [Tooltip("Every parent combination that can result in this moth.")] public MothPair[] PossibleParents;
+
+    [Tooltip("Wether the moth should spawn in a new game or not.")] public bool isStandardMoth = false;
 }

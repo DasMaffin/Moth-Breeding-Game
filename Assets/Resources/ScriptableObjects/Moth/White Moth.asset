@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FriendlyName: Whity
   Prefab: {fileID: 1414238178284349243, guid: 8b853147b97918d478024b7b4eba3e29, type: 3}
+  MothRepresentation: {fileID: 21300000, guid: b69c53a09fd8ae849ad969fc433fbd9b, type: 3}
   PossibleParents: []
+  isStandardMoth: 1

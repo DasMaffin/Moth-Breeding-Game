@@ -39,6 +39,15 @@ public class GameManager : MonoBehaviour
 
     public void FirstStart()
     {
-
+        float xAxis = 0;
+        foreach(Moth moth in AllMoths)
+        {
+            if(moth.isStandardMoth)
+            {
+                GameObject obj = Instantiate(moth.Prefab, new Vector3(xAxis, 0, 0), Quaternion.identity, null);
+                obj.GetComponent<MothController>().self = moth;
+                xAxis += 1;
+            }
+        }
     }
 }
