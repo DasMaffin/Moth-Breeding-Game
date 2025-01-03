@@ -1,16 +1,7 @@
+using System.ComponentModel;
 using UnityEngine;
-
-public class Moth : MonoBehaviour
+[CreateAssetMenu(fileName = "New Moth", menuName = "Moth/New Moth", order = 1)]
+public class Moth : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Description("The name used in game.")] public string FriendlyName;
 }
