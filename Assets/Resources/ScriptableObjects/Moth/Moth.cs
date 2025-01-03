@@ -14,12 +14,6 @@ public class MothPair : IEquatable<MothPair>
 
     public MothPair() { }
 
-    public MothPair(Moth firstMoth, Moth secondMoth)
-    {
-        FirstMoth = firstMoth;
-        SecondMoth = secondMoth;
-    }
-
     public bool Equals(MothPair other)
     {
         if(FirstMoth == other.FirstMoth && SecondMoth == other.SecondMoth ||
