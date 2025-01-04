@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour
         {
             toInstantiate.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
-        GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), Quaternion.identity, null);
+        GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), toInstantiate.transform.rotation, null);
         obj.GetComponent<MothController>().self = moth;
-        xAxis += 1.1f;
+        xAxis += 2f;
     }
 }

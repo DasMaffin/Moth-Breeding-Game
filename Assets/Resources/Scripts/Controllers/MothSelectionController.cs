@@ -80,15 +80,16 @@ public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPoin
     {
         if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Moth")))
         {
-            Moth moth = hit.collider.gameObject.GetComponent<MothController>().self;
-            thisImageComponent.sprite = moth.MothRepresentation;
-            if(this.index == 1)
+            Moth moth = hit.collider.gameObject.GetComponentInParent<MothController>().self;
+            if(this.index == 1 && moth != GameManager.Instance.selectedMoths.SecondMoth)
             {
                 GameManager.Instance.selectedMoths.SetFirstMoth(moth);
+                thisImageComponent.sprite = moth.MothRepresentation;
             }
-            else if(this.index == 2)
+            else if(this.index == 2 && moth != GameManager.Instance.selectedMoths.FirstMoth)
             {
                 GameManager.Instance.selectedMoths.SetSecondMoth(moth);
+                thisImageComponent.sprite = moth.MothRepresentation;
             }
         }
         else

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grey Moth
   m_EditorClassIdentifier: 
   FriendlyName: Grey-i
-  Prefab: {fileID: 3257676064576430841, guid: da361b986d4253e4d8bc37e453046b4a, type: 3}
+  Prefab: {fileID: 8357915335756594363, guid: 94aba1cb38d656d40b3d2e7dffaa46ea, type: 3}
   MothRepresentation: {fileID: 21300000, guid: 5f1a5148693833949b93ec055f709ca7, type: 3}
   PossibleParents:
   - FirstMoth: {fileID: 11400000, guid: 679689fc8b4eff34a91859ae3499ba4f, type: 2}
