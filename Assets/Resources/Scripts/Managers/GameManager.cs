@@ -73,6 +73,6 @@ public class GameManager : MonoBehaviour
         }
         GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), Quaternion.identity, null);
         obj.GetComponent<MothController>().self = moth;
-        xAxis += 1;
+        xAxis += 1.1f;
     }
 }

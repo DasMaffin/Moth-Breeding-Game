@@ -5,21 +5,27 @@ using UnityEngine.UI;
 
 public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public int index = 0;
+    [Tooltip("Index 1: First Moth for breeding selection\nIndex 2: Second moth for breeding selection")] public int index = 0;
 
-    public static event System.Action OnInitSelectEvent;
-    public static event System.Action OnSelectMothEvent;
-    public static MothSelectionController currentController;
+    public static event System.Action OnMothSelectStarted;
+    public static event System.Action OnMothSelected;
+    public static MothSelectionController ActiveControllerForSelection;
 
     private bool awaitingRaycast = false;
+    private Image thisImageComponent;
+
+    private void Awake()
+    {
+        thisImageComponent = this.GetComponent<Image>();
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if(awaitingRaycast)
             return;
 
-        currentController = this;
-        this.GetComponent<Image>().color = Color.grey;
+        ActiveControllerForSelection = this;
+        thisImageComponent.color = Color.grey;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -27,38 +33,37 @@ public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPoin
         if(awaitingRaycast)
             return;
 
-        OnInitSelectEvent?.Invoke();
-        awaitingRaycast = true;
+        OnMothSelectStarted?.Invoke();
+        awaitingRaycast = true; // Set it here so in update it doesnt count as an instant press.
     }
 
     private void OnEnable()
     {
-        OnInitSelectEvent += HandleSelection;
-        OnSelectMothEvent += SelectMoth;
+        OnMothSelectStarted += MothSelectStarted;
+        OnMothSelected += MothSelected;
     }
 
     private void OnDisable()
     {
-        OnInitSelectEvent -= HandleSelection;
-        OnSelectMothEvent -= SelectMoth;
+        OnMothSelectStarted -= MothSelectStarted;
+        OnMothSelected -= MothSelected;
     }
 
-    private void HandleSelection()
+    private void MothSelectStarted()
     {
-        if(this == MothSelectionController.currentController)
+        if(this == ActiveControllerForSelection)
         {
-            this.GetComponent<Image>().color = Color.yellow;
-
+            thisImageComponent.color = Color.yellow;
             return;
         }
-        if(this.GetComponent<Image>().sprite != null) return;
+        if(thisImageComponent.sprite != null) return;
 
-        this.GetComponent<Image>().color = Color.black;
+        thisImageComponent.color = Color.black;
     }
 
-    private void SelectMoth()
+    private void MothSelected()
     {
-        this.GetComponent<Image>().color = Color.white;
+        thisImageComponent.color = Color.white;
     }
 
     private void Update()
@@ -73,11 +78,10 @@ public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPoin
 
     private void PerformRaycast()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Moth")))
+        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Moth")))
         {
             Moth moth = hit.collider.gameObject.GetComponent<MothController>().self;
-            this.GetComponent<Image>().sprite = moth.MothRepresentation;
+            thisImageComponent.sprite = moth.MothRepresentation;
             if(this.index == 1)
             {
                 GameManager.Instance.selectedMoths.SetFirstMoth(moth);
@@ -91,6 +95,6 @@ public class MothSelectionController : MonoBehaviour, IPointerDownHandler, IPoin
         {
             Debug.Log("No moth detected below cursor!");
         }
-        OnSelectMothEvent?.Invoke();
+        OnMothSelected?.Invoke();
     }
 }
