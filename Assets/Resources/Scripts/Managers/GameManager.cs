@@ -50,7 +50,10 @@ public class GameManager : MonoBehaviour
         {
             if(moth.isStandardMoth)
             {
-                SpawnMoth(moth);
+                for(int i = 0; i < 2; i++)
+                {
+                    SpawnMoth(moth, (Gender)i);
+                }
             }
         }
     }
@@ -61,10 +64,10 @@ public class GameManager : MonoBehaviour
 
         Moth moth = Moth.SelectRandomMoth(potentialChilds, selectedMoths);
 
-        SpawnMoth(moth);
+        SpawnMoth(moth, Gender.No);
     }
 
-    public void SpawnMoth(Moth moth, bool isBaby = false)
+    public void SpawnMoth(Moth moth, Gender gender, bool isBaby = false)
     {
         GameObject toInstantiate = moth.Prefab;
         if(isBaby)
@@ -72,7 +75,9 @@ public class GameManager : MonoBehaviour
             toInstantiate.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
         GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), toInstantiate.transform.rotation, null);
-        obj.GetComponent<MothController>().self = moth;
+        MothController mc = obj.GetComponent<MothController>();
+        mc.self = moth;
+        mc.Gender = gender;
         xAxis += 2f;
     }
 }

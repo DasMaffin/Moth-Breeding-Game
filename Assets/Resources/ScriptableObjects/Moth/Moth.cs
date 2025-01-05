@@ -5,11 +5,19 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
+public enum Gender
+{
+    Male = 0,
+    Female = 1,
+    No = 2
+}
+
+
 [System.Serializable]
 public class MothPair : IEquatable<MothPair>
 {
-    [Tooltip("First required moth type")] public Moth FirstMoth;
-    [Tooltip("Second required moth type")] public Moth SecondMoth;
+    [Tooltip("First required moth type")] public MothController FirstMoth;
+    [Tooltip("Second required moth type")] public MothController SecondMoth;
     [Tooltip("A weighted value of the chance to pull this moth. Higher weight = Higher chance")] public float Chance;
 
     public bool Equals(MothPair other)
@@ -20,12 +28,12 @@ public class MothPair : IEquatable<MothPair>
         return false;
     }
 
-    public void SetFirstMoth(Moth m)
+    public void SetFirstMoth(MothController m)
     {
         FirstMoth = m;
     }
 
-    public void SetSecondMoth(Moth m)
+    public void SetSecondMoth(MothController m)
     {
         SecondMoth = m;
     }

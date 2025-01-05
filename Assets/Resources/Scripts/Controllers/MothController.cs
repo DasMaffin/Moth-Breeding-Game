@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class MothController : MonoBehaviour
 {
     public Moth self;
+    public Gender Gender;
     public float growSpeed = 0.001f;
 
     private float fullSize = 0.1f;
