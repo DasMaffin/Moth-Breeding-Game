@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public enum Gender
 {
@@ -12,30 +13,39 @@ public enum Gender
     No = 2
 }
 
-
 [System.Serializable]
 public class MothPair : IEquatable<MothPair>
 {
-    [Tooltip("First required moth type")] public MothController FirstMoth;
-    [Tooltip("Second required moth type")] public MothController SecondMoth;
-    [Tooltip("A weighted value of the chance to pull this moth. Higher weight = Higher chance")] public float Chance;
+    [Tooltip("First required moth type")] public Moth FirstMoth;
+    [Tooltip("Second required moth type")] public Moth SecondMoth;
+    [HideInInspector] public MothController FirstMothController;
+    [HideInInspector] public MothController SecondMothController;
+    [Tooltip("A weighted value of the chance to pull this moth. Higher weight = Higher chance")] public float WeigthedChanceBase;
+    [Tooltip("A weighted value of the chance to pull this moth. Higher weight = Higher chance")] public float WeigthedChanceFlowered;
+    [Tooltip("")] public Flower flower;
 
     public bool Equals(MothPair other)
     {
-        if(FirstMoth == other.FirstMoth && SecondMoth == other.SecondMoth ||
-            FirstMoth == other.SecondMoth && SecondMoth == other.FirstMoth)
+        if(FirstMothController == other.FirstMothController && SecondMothController == other.SecondMothController ||
+            FirstMothController == other.SecondMothController && SecondMothController == other.FirstMothController ||
+            FirstMoth == other.FirstMoth && SecondMoth == other.SecondMoth ||
+            FirstMoth == other.SecondMoth && SecondMoth == other.FirstMoth ||
+            FirstMoth == other.FirstMothController.self && SecondMoth == other.SecondMothController.self ||
+            FirstMoth == other.SecondMothController.self && other.FirstMothController.self ||
+            FirstMothController.self == other.FirstMoth && SecondMothController.self == other.SecondMoth ||
+            FirstMothController.self == other.SecondMoth && SecondMothController.self == other.FirstMoth)
             return true;
         return false;
     }
 
     public void SetFirstMoth(MothController m)
     {
-        FirstMoth = m;
+        FirstMothController = m;
     }
 
     public void SetSecondMoth(MothController m)
     {
-        SecondMoth = m;
+        SecondMothController = m;
     }
 }
 
@@ -50,39 +60,60 @@ public class Moth : ScriptableObject
 
     [Tooltip("Wether the moth should spawn in a new game or not.")] public bool isStandardMoth = false;
 
+    private float getMyWeight(MothPair mp, Flower flower)
+    {
+        float ret = PossibleParents.Sum(p =>
+        {
+            if(p.Equals(mp))
+            {
+                return flower == null ? p.WeigthedChanceBase : p.WeigthedChanceFlowered;
+            }
+            return 0;
+        });
+
+        return ret;
+    }
+
     public static List<Moth> FindMothsWithPair(MothPair targetPair)
     {
         return GameManager.Instance.AllMoths.
-            Where(moth => moth.PossibleParents.
-                Any(pair => pair.Equals(targetPair))).
-            ToList();
+            Where(moth => 
+                moth.PossibleParents.Any(pair => 
+                    pair.Equals(targetPair))
+                ).ToList();
     }
 
-    public static Moth SelectRandomMoth(List<Moth> potentialMoths, MothPair targetPair)
+    public static Moth SelectRandomMoth(List<Moth> potentialMoths, MothPair targetPair, Flower flower = null)
     {
-        float totalWeight = potentialMoths.Sum(m => m.PossibleParents.Sum(p => 
+        float totalWeight = potentialMoths.Sum(m => m.PossibleParents.Sum(p =>
         {
             if(p.Equals(targetPair))
             {
-                return p.Chance;
+                return flower == null ? p.WeigthedChanceBase : p.WeigthedChanceFlowered;
             }
             return 0;
-        }));
+        })) + 200;
 
         foreach(Moth m in potentialMoths)
         {
-            foreach(MothPair mp in m.PossibleParents.Where(p => p.Equals(targetPair)))
+            float rand = UnityEngine.Random.Range(0, totalWeight);
+            if(rand <= m.getMyWeight(targetPair, flower))
             {
-                float rand = UnityEngine.Random.Range(0, totalWeight);
-                if(rand <= mp.Chance)
-                {
-                    return m;
-                }
-                else
-                {
-                    totalWeight -= mp.Chance;
-                }
+                return m;
             }
+            else
+            {
+                totalWeight -= m.getMyWeight(targetPair, flower);
+            }
+        }
+
+        if(UnityEngine.Random.Range(0, 200) <= 100)
+        {
+            return targetPair.FirstMoth != null ? targetPair.FirstMoth : targetPair.FirstMothController.self;
+        }
+        else
+        {
+            return targetPair.SecondMoth != null ? targetPair.SecondMoth : targetPair.SecondMothController.self;
         }
 
         throw new Exception("This should never happen. Couldnt find a possible child!");

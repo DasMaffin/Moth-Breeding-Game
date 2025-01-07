@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public List<Moth> AllMoths = new List<Moth>();
+    public Dictionary<Flower, int> OwnedFlowers = new Dictionary<Flower, int>(); // Flower, Amount; The amount you own of what flower.
 
     public MothPair selectedMoths;
 

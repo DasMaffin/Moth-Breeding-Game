@@ -18,8 +18,9 @@ MonoBehaviour:
   PossibleParents:
   - FirstMoth: {fileID: 11400000, guid: 679689fc8b4eff34a91859ae3499ba4f, type: 2}
     SecondMoth: {fileID: 11400000, guid: 3e5855e8be700e44295c1b6bbb26177a, type: 2}
-    Chance: 100
-  - FirstMoth: {fileID: 11400000, guid: 3e5855e8be700e44295c1b6bbb26177a, type: 2}
-    SecondMoth: {fileID: 11400000, guid: 679689fc8b4eff34a91859ae3499ba4f, type: 2}
-    Chance: 50
+    FirstMothController: {fileID: 0}
+    SecondMothController: {fileID: 0}
+    WeigthedChanceBase: 5
+    WeigthedChanceFlowered: 200
+    flower: {fileID: 0}
   isStandardMoth: 0
