@@ -4,7 +4,6 @@ using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public enum Gender
 {
