@@ -8,6 +8,7 @@ public class MothController : MonoBehaviour
     public bool BreedingCooldownActive = false;
     public float BreedingCooldown = 30f;
     public float growSpeed = 0.001f;
+    public float BreedingCooldownLeft { get => BreedingCooldown - currentBreedingCooldown; }
 
     private float fullSize = 0.1f;
     private float currentBreedingCooldown = 0f;
