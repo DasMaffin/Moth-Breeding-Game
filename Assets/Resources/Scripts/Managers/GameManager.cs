@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
 
     public void BreedMoths()
     {
+        if(selectedMoths.FirstMothController.BreedingCooldownActive || selectedMoths.SecondMothController.BreedingCooldownActive) return;
         List<Moth> potentialChilds = Moth.FindMothsWithPair(selectedMoths);
 
         Moth moth = Moth.SelectRandomMoth(potentialChilds, selectedMoths);
