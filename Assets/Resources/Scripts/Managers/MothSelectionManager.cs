@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -29,7 +30,12 @@ public class MothSelectionManager : MonoBehaviour
     #endregion
 
     public Image FirstImageComponent;
+    public TextMeshProUGUI FirstNameComponent;
+    public TextMeshProUGUI FirstTimerComponent;
+
     public Image SecondImageComponent;
+    public TextMeshProUGUI SecondNameComponent;
+    public TextMeshProUGUI SecondTimerComponent;
 
     private void Awake()
     {
@@ -42,11 +48,13 @@ public class MothSelectionManager : MonoBehaviour
         {
             GameManager.Instance.selectedMoths.SetFirstMoth(mc);
             MothSelectionManager.Instance.FirstImageComponent.sprite = mc.self.MothRepresentation;
+            MothSelectionManager.Instance.FirstNameComponent.text = mc.self.FriendlyName;
         }
         else if(mc.Gender == Gender.Female)
         {
             GameManager.Instance.selectedMoths.SetSecondMoth(mc);
             MothSelectionManager.Instance.SecondImageComponent.sprite = mc.self.MothRepresentation;
+            MothSelectionManager.Instance.SecondNameComponent.text = mc.self.FriendlyName;
         }
     }
 }

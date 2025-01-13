@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DragAndDropManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class DragAndDropManager : MonoBehaviour
     public RectTransform uiRepresentation; // 2D UI representation of the object
     public GameObject MaleIcon;
     public GameObject FemaleIcon;
+    public Image MothRepresentation;
     public RectTransform targetUI; // The UI element to drop on
 
     private bool isDragging = false;
@@ -33,6 +35,7 @@ public class DragAndDropManager : MonoBehaviour
             {
                 hasMovedMouse = true;
                 uiRepresentation.gameObject.SetActive(true); // Show the 2D representation
+                MothRepresentation.sprite = selectedObject.self.MothRepresentation;
                 if(selectedObject.Gender == Gender.Male)
                 {
                     MaleIcon.SetActive(true);

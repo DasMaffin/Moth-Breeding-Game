@@ -25,14 +25,40 @@ public class MothPair : IEquatable<MothPair>
 
     public bool Equals(MothPair other)
     {
-        if(FirstMothController == other.FirstMothController && SecondMothController == other.SecondMothController ||
-            FirstMothController == other.SecondMothController && SecondMothController == other.FirstMothController ||
-            FirstMoth == other.FirstMoth && SecondMoth == other.SecondMoth ||
-            FirstMoth == other.SecondMoth && SecondMoth == other.FirstMoth ||
-            FirstMoth == other.FirstMothController.self && SecondMoth == other.SecondMothController.self ||
-            FirstMoth == other.SecondMothController.self && other.FirstMothController.self ||
-            FirstMothController.self == other.FirstMoth && SecondMothController.self == other.SecondMoth ||
-            FirstMothController.self == other.SecondMoth && SecondMothController.self == other.FirstMoth)
+        if
+        (
+            (FirstMothController != null && other.FirstMothController != null &&
+             FirstMothController == other.FirstMothController &&
+             SecondMothController == other.SecondMothController) ||
+
+            (FirstMothController != null && other.SecondMothController != null &&
+             FirstMothController == other.SecondMothController &&
+             SecondMothController == other.FirstMothController) ||
+
+            (FirstMoth != null && other.FirstMoth != null &&
+             FirstMoth == other.FirstMoth &&
+             SecondMoth == other.SecondMoth) ||
+
+            (FirstMoth != null && other.SecondMoth != null &&
+             FirstMoth == other.SecondMoth &&
+             SecondMoth == other.FirstMoth) ||
+
+            (FirstMoth != null && other.FirstMothController != null &&
+             FirstMoth == other.FirstMothController.self &&
+             SecondMoth == other.SecondMothController?.self) ||
+
+            (FirstMoth != null && other.SecondMothController != null &&
+             FirstMoth == other.SecondMothController.self &&
+             SecondMoth == other.FirstMothController?.self) ||
+
+            (FirstMothController?.self != null && other.FirstMoth != null &&
+             FirstMothController.self == other.FirstMoth &&
+             SecondMothController?.self == other.SecondMoth) ||
+
+            (FirstMothController?.self != null && other.SecondMoth != null &&
+             FirstMothController.self == other.SecondMoth &&
+             SecondMothController?.self == other.FirstMoth)
+        )
             return true;
         return false;
     }

@@ -17,7 +17,7 @@ MonoBehaviour:
   MothRepresentation: {fileID: 21300000, guid: 5f1a5148693833949b93ec055f709ca7, type: 3}
   PossibleParents:
   - FirstMoth: {fileID: 11400000, guid: 679689fc8b4eff34a91859ae3499ba4f, type: 2}
-    SecondMoth: {fileID: 11400000, guid: 3e5855e8be700e44295c1b6bbb26177a, type: 2}
+    SecondMoth: {fileID: 11400000, guid: a19cd693b124d084ebfbd2ebac734cf2, type: 2}
     FirstMothController: {fileID: 0}
     SecondMothController: {fileID: 0}
     WeigthedChanceBase: 5
