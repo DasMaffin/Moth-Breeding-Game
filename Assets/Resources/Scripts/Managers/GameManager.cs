@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
         Moth moth = Moth.SelectRandomMoth(potentialChilds, selectedMoths);
 
-        SpawnMoth(moth, Gender.No);
+        SpawnMoth(moth, (Gender)UnityEngine.Random.Range(0, 2));
 
         selectedMoths.FirstMothController.BreedingCooldownActive = true;
         selectedMoths.SecondMothController.BreedingCooldownActive = true;

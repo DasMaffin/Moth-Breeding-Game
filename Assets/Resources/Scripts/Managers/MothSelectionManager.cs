@@ -73,7 +73,7 @@ public class MothSelectionManager : MonoBehaviour
             }
             else
             {
-                MothSelectionManager.Instance.FirstTimerComponent.text = MothSelectionManager.Instance.FirstMC.BreedingCooldownLeft.ToString("0");
+                MothSelectionManager.Instance.FirstTimerComponent.text = MothSelectionManager.Instance.FirstMC.BreedingCooldownLeft.ToString("0") + "s";
             }
         }
         if(MothSelectionManager.Instance.SecondMC)
@@ -84,7 +84,7 @@ public class MothSelectionManager : MonoBehaviour
             }
             else
             {
-                MothSelectionManager.Instance.SecondTimerComponent.text = MothSelectionManager.Instance.SecondMC.BreedingCooldownLeft.ToString("0");
+                MothSelectionManager.Instance.SecondTimerComponent.text = MothSelectionManager.Instance.SecondMC.BreedingCooldownLeft.ToString("0") + "s";
             }
         }
     }
