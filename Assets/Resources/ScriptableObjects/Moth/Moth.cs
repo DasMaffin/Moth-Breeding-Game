@@ -91,7 +91,7 @@ public class Moth : ScriptableObject
         {
             if(p.Equals(mp))
             {
-                return flower == null ? p.WeigthedChanceBase : p.WeigthedChanceFlowered;
+                return (flower == null || flower != p.flower) ? p.WeigthedChanceBase : p.WeigthedChanceFlowered;
             }
             return 0;
         });
@@ -114,7 +114,7 @@ public class Moth : ScriptableObject
         {
             if(p.Equals(targetPair))
             {
-                return flower == null ? p.WeigthedChanceBase : p.WeigthedChanceFlowered;
+                return (flower == null || flower != p.flower) ? p.WeigthedChanceBase : p.WeigthedChanceFlowered;
             }
             return 0;
         })) + 200;

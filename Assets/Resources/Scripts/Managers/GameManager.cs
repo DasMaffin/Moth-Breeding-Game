@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<Flower, int> OwnedFlowers = new Dictionary<Flower, int>(); // Flower, Amount; The amount you own of what flower.
 
     public MothPair selectedMoths;
+    public Flower selectedFlower;
 
     private void Awake()
     {
@@ -41,6 +42,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         AllMoths = Resources.LoadAll<Moth>("ScriptableObjects/Moth").ToList();
+        foreach(Flower flower in Resources.LoadAll<Flower>("ScriptableObjects/Flower"))
+        {
+            OwnedFlowers.Add(flower, 0);
+            HUDManager.Instance.AddFlowerToSelection(OwnedFlowers.FirstOrDefault(kv => kv.Key.Equals(flower)));
+        }
         FirstStart();
     }
 
@@ -62,9 +68,9 @@ public class GameManager : MonoBehaviour
     public void BreedMoths()
     {
         if(selectedMoths.FirstMothController.BreedingCooldownActive || selectedMoths.SecondMothController.BreedingCooldownActive) return;
-        List<Moth> potentialChilds = Moth.FindMothsWithPair(selectedMoths);
+        List<Moth> potentialChildren = Moth.FindMothsWithPair(selectedMoths);
 
-        Moth moth = Moth.SelectRandomMoth(potentialChilds, selectedMoths);
+        Moth moth = Moth.SelectRandomMoth(potentialChildren, selectedMoths, selectedFlower);
 
         SpawnMoth(moth, (Gender)UnityEngine.Random.Range(0, 2));
 

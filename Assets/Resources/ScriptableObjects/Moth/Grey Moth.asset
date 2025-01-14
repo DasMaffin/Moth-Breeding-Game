@@ -22,5 +22,5 @@ MonoBehaviour:
     SecondMothController: {fileID: 0}
     WeigthedChanceBase: 5
     WeigthedChanceFlowered: 200
-    flower: {fileID: 0}
+    flower: {fileID: 11400000, guid: 212795786cb8192429e5858d19f61ef9, type: 2}
   isStandardMoth: 0
