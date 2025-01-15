@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HUDManager : MonoBehaviour
@@ -27,6 +28,8 @@ public class HUDManager : MonoBehaviour
 
     #endregion
 
+    private List<GameObject> PopUpHistory = new List<GameObject>();
+
     [SerializeField] private GameObject FlowerSelectionHUD;
     [SerializeField] private GameObject FlowerSelectionScrollContentRoot;
 
@@ -34,17 +37,39 @@ public class HUDManager : MonoBehaviour
 
     public void ToggleFlowerSelectionHud()
     {
-        FlowerSelectionHUD.SetActive(!FlowerSelectionHUD.activeSelf);
+        ToggleFlowerSelectionHud(!Instance.FlowerSelectionHUD.activeSelf);
     }
+
     public void ToggleFlowerSelectionHud(bool SetState)
     {
-        FlowerSelectionHUD.SetActive(SetState);
+        Instance.FlowerSelectionHUD.SetActive(SetState);
+        AddRemovePopUpHistory(Instance.FlowerSelectionHUD, SetState);
+    }
+
+    public void CloseLastPopUp()
+    {
+        if(Instance.PopUpHistory.Count == 0) return;
+        GameObject lastPopUp = Instance.PopUpHistory.LastOrDefault();
+        lastPopUp.SetActive(false);
+        AddRemovePopUpHistory(lastPopUp, false);
     }
 
     public void AddFlowerToSelection(KeyValuePair<Flower, int> v)
     {
-        FlowerEntryController fec = Instantiate(FlowerSelectionScrollContentEntryPrefab, FlowerSelectionScrollContentRoot.transform).GetComponent<FlowerEntryController>();
+        FlowerEntryController fec = Instantiate(Instance.FlowerSelectionScrollContentEntryPrefab, Instance.FlowerSelectionScrollContentRoot.transform).GetComponent<FlowerEntryController>();
         fec.Flower = v;
+    }
+
+    private void AddRemovePopUpHistory(GameObject popUp, bool Add)
+    {
+        if(Add)
+        {
+            Instance.PopUpHistory.Add(popUp);
+        }
+        else
+        {
+            Instance.PopUpHistory.Remove(popUp);
+        }
     }
 
     private void Awake()
