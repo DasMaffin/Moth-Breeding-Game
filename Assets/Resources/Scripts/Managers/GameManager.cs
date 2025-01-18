@@ -28,10 +28,10 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    public List<Moth> AllMoths = new List<Moth>();
+    public List<Species> AllMoths = new List<Species>();
     public Dictionary<Flower, int> OwnedFlowers = new Dictionary<Flower, int>(); // Flower, Amount; The amount you own of what flower.
 
-    public MothPair selectedMoths;
+    public SpeciesPair selectedMoths;
     public Flower selectedFlower;
 
     private void Awake()
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        AllMoths = Resources.LoadAll<Moth>("ScriptableObjects/Moth").ToList();
+        AllMoths = Resources.LoadAll<Species>("ScriptableObjects/Moth").ToList();
         foreach(Flower flower in Resources.LoadAll<Flower>("ScriptableObjects/Flower"))
         {
             OwnedFlowers.Add(flower, 0);
@@ -53,9 +53,9 @@ public class GameManager : MonoBehaviour
     float xAxis = 0;
     public void FirstStart()
     {
-        foreach(Moth moth in AllMoths)
+        foreach(Species moth in AllMoths)
         {
-            if(moth.isStandardMoth)
+            if(moth.isStandardSpecies)
             {
                 for(int i = 0; i < 2; i++)
                 {
@@ -67,28 +67,27 @@ public class GameManager : MonoBehaviour
 
     public void BreedMoths()
     {
-        if(selectedMoths.FirstMothController.BreedingCooldownActive || selectedMoths.SecondMothController.BreedingCooldownActive) return;
-        List<Moth> potentialChildren = Moth.FindMothsWithPair(selectedMoths);
+        if(!selectedMoths.FirstMothController.Moth.CanBreed() || !selectedMoths.SecondMothController.Moth.CanBreed()) return;
+        List<Species> potentialChildren = Species.FindMothsWithPair(selectedMoths);
 
-        Moth moth = Moth.SelectRandomMoth(potentialChildren, selectedMoths, selectedFlower);
+        Species moth = Species.SelectRandomMoth(potentialChildren, selectedMoths, selectedFlower);
 
         SpawnMoth(moth, (Gender)UnityEngine.Random.Range(0, 2));
 
-        selectedMoths.FirstMothController.BreedingCooldownActive = true;
-        selectedMoths.SecondMothController.BreedingCooldownActive = true;
+        selectedMoths.FirstMothController.Moth.BreedingCooldownActive = true;
+        selectedMoths.SecondMothController.Moth.BreedingCooldownActive = true;
     }
 
-    public void SpawnMoth(Moth moth, Gender gender, bool isBaby = false)
+    public void SpawnMoth(Species species, Gender gender, bool isBaby = false)
     {
-        GameObject toInstantiate = moth.Prefab;
+        GameObject toInstantiate = species.Prefab;
         if(isBaby)
         {
             toInstantiate.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
         GameObject obj = Instantiate(toInstantiate, new Vector3(xAxis, 0, 0), toInstantiate.transform.rotation, null);
         MothController mc = obj.GetComponent<MothController>();
-        mc.self = moth;
-        mc.Gender = gender;
+        mc.Moth = new Moth(species, gender);
         xAxis += 2f;
     }
 }

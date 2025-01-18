@@ -35,12 +35,12 @@ public class DragAndDropManager : MonoBehaviour
             {
                 hasMovedMouse = true;
                 uiRepresentation.gameObject.SetActive(true); // Show the 2D representation
-                MothRepresentation.sprite = selectedObject.self.MothRepresentation;
-                if(selectedObject.Gender == Gender.Male)
+                MothRepresentation.sprite = selectedObject.Moth.species.MothRepresentation;
+                if(selectedObject.Moth.Gender == Gender.Male)
                 {
                     MaleIcon.SetActive(true);
                 }
-                else if(selectedObject.Gender == Gender.Female)
+                else if(selectedObject.Moth.Gender == Gender.Female)
                 {
                     FemaleIcon.SetActive(true);
                 }

@@ -1,36 +1,62 @@
+using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class MothController : MonoBehaviour
 {
-    public Moth self;
-    public Gender Gender;
-    public bool BreedingCooldownActive = false;
-    public float BreedingCooldown = 30f;
-    public float growSpeed = 0.001f;
-    public float BreedingCooldownLeft { get => BreedingCooldown - currentBreedingCooldown; }
+    public Moth Moth;
 
-    private float fullSize = 0.1f;
-    private float currentBreedingCooldown = 0f;
+    [SerializeField] private List<MeshRenderer> WingParts = new List<MeshRenderer>();
+    [SerializeField] private List<MeshRenderer> BodyParts = new List<MeshRenderer>();
+
+    private void Start()
+    {
+        foreach(MeshRenderer wingPart in WingParts)
+        {
+            Material[] GOMaterials = wingPart.materials;
+            Material[] wingMaterials = new Material[Moth.Wings.Length + GOMaterials.Length];
+            int i = 0;
+            foreach(Material wingMaterial in Moth.Wings)
+            {
+                wingMaterials[i] = wingMaterial;
+                i++;
+            }
+            foreach(Material wingMaterial in GOMaterials)
+            {
+                wingMaterials[i] = wingMaterial;
+                i++;
+            }
+            wingPart.materials = wingMaterials;
+        }
+        foreach(MeshRenderer bodyPart in BodyParts)
+        {
+            Material[] bodyMaterials = new Material[Moth.Wings.Length + bodyPart.materials.Length];
+            int i = 0;
+            foreach(Material bodyMaterial in Moth.Body)
+            {
+                bodyMaterials[i] = bodyMaterial;
+                i++;
+            }
+            foreach(Material bodyMaterial in bodyPart.materials)
+            {
+                bodyMaterials[i] = bodyMaterial;
+                i++;
+            }
+            bodyPart.materials = bodyMaterials;
+        }
+    }
 
     private void Update()
     {
-        if(BreedingCooldownActive)
+        Moth.ElapseBreedingCooldown(Time.deltaTime);
+        if(transform.localScale.x < Moth.fullSize)
         {
-            currentBreedingCooldown += Time.deltaTime;
-            if(currentBreedingCooldown > BreedingCooldown)
-            {
-                currentBreedingCooldown = 0f;
-                BreedingCooldownActive = false;
-            }
+            transform.localScale = new Vector3(transform.localScale.x + Moth.growSpeed * Time.deltaTime, transform.localScale.y + Moth.growSpeed * Time.deltaTime, transform.localScale.z + Moth.growSpeed * Time.deltaTime);
         }
-        if(transform.localScale.x < fullSize)
+        if(transform.localScale.x > Moth.fullSize)
         {
-            transform.localScale = new Vector3(transform.localScale.x + growSpeed * Time.deltaTime, transform.localScale.y + growSpeed * Time.deltaTime, transform.localScale.z + growSpeed * Time.deltaTime);
-        }
-        if(transform.localScale.x > fullSize)
-        {
-            transform.localScale = new Vector3(fullSize, fullSize, fullSize);
+            transform.localScale = new Vector3(Moth.fullSize, Moth.fullSize, Moth.fullSize);
         }
     }
 }

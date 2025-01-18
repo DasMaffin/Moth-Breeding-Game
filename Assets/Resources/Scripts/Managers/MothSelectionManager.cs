@@ -47,18 +47,18 @@ public class MothSelectionManager : MonoBehaviour
 
     public void SetMothSelection(MothController mc)
     {
-        if(mc.Gender == Gender.Male)
+        if(mc.Moth.Gender == Gender.Male)
         {
             GameManager.Instance.selectedMoths.SetFirstMoth(mc);
-            MothSelectionManager.Instance.FirstImageComponent.sprite = mc.self.MothRepresentation;
-            MothSelectionManager.Instance.FirstNameComponent.text = mc.self.FriendlyName;
+            MothSelectionManager.Instance.FirstImageComponent.sprite = mc.Moth.species.MothRepresentation;
+            MothSelectionManager.Instance.FirstNameComponent.text = mc.Moth.species.FriendlyName;
             MothSelectionManager.Instance.FirstMC = mc;
         }
-        else if(mc.Gender == Gender.Female)
+        else if(mc.Moth.Gender == Gender.Female)
         {
             GameManager.Instance.selectedMoths.SetSecondMoth(mc);
-            MothSelectionManager.Instance.SecondImageComponent.sprite = mc.self.MothRepresentation;
-            MothSelectionManager.Instance.SecondNameComponent.text = mc.self.FriendlyName;
+            MothSelectionManager.Instance.SecondImageComponent.sprite = mc.Moth.species.MothRepresentation;
+            MothSelectionManager.Instance.SecondNameComponent.text = mc.Moth.species.FriendlyName;
             MothSelectionManager.Instance.SecondMC = mc;
         }
     }
@@ -67,24 +67,24 @@ public class MothSelectionManager : MonoBehaviour
     {
         if(MothSelectionManager.Instance.FirstMC)
         {
-            if(!MothSelectionManager.Instance.FirstMC.BreedingCooldownActive)
+            if(!MothSelectionManager.Instance.FirstMC.Moth.BreedingCooldownActive)
             {
                 MothSelectionManager.Instance.FirstTimerComponent.text = "Moth can breed!";
             }
             else
             {
-                MothSelectionManager.Instance.FirstTimerComponent.text = MothSelectionManager.Instance.FirstMC.BreedingCooldownLeft.ToString("0") + "s";
+                MothSelectionManager.Instance.FirstTimerComponent.text = MothSelectionManager.Instance.FirstMC.Moth.BreedingCooldownLeft.ToString("0") + "s";
             }
         }
         if(MothSelectionManager.Instance.SecondMC)
         {
-            if(!MothSelectionManager.Instance.SecondMC.BreedingCooldownActive)
+            if(!MothSelectionManager.Instance.SecondMC.Moth.BreedingCooldownActive)
             {
                 MothSelectionManager.Instance.SecondTimerComponent.text = "Moth can breed!";
             }
             else
             {
-                MothSelectionManager.Instance.SecondTimerComponent.text = MothSelectionManager.Instance.SecondMC.BreedingCooldownLeft.ToString("0") + "s";
+                MothSelectionManager.Instance.SecondTimerComponent.text = MothSelectionManager.Instance.SecondMC.Moth.BreedingCooldownLeft.ToString("0") + "s";
             }
         }
     }
