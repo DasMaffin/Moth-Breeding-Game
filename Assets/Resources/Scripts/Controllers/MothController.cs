@@ -31,14 +31,15 @@ public class MothController : MonoBehaviour
         }
         foreach(MeshRenderer bodyPart in BodyParts)
         {
-            Material[] bodyMaterials = new Material[Moth.Wings.Length + bodyPart.materials.Length];
+            Material[] GOMaterials = bodyPart.materials;
+            Material[] bodyMaterials = new Material[Moth.Wings.Length + GOMaterials.Length];
             int i = 0;
             foreach(Material bodyMaterial in Moth.Body)
             {
                 bodyMaterials[i] = bodyMaterial;
                 i++;
             }
-            foreach(Material bodyMaterial in bodyPart.materials)
+            foreach(Material bodyMaterial in GOMaterials)
             {
                 bodyMaterials[i] = bodyMaterial;
                 i++;
