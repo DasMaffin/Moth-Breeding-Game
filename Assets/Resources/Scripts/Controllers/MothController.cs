@@ -12,29 +12,18 @@ public class MothController : MonoBehaviour
 
     private void Start()
     {
-        foreach(MeshRenderer wingPart in WingParts)
+        SetMeshMaterials(WingParts, Moth.Wings);
+        SetMeshMaterials(BodyParts, Moth.Body);
+    }
+
+    private void SetMeshMaterials(List<MeshRenderer> meshRenderers, Material[] materials)
+    {
+        foreach(MeshRenderer meshRenderer in meshRenderers)
         {
-            Material[] GOMaterials = wingPart.materials;
-            Material[] wingMaterials = new Material[Moth.Wings.Length + GOMaterials.Length];
-            int i = 0;
-            foreach(Material wingMaterial in Moth.Wings)
-            {
-                wingMaterials[i] = wingMaterial;
-                i++;
-            }
-            foreach(Material wingMaterial in GOMaterials)
-            {
-                wingMaterials[i] = wingMaterial;
-                i++;
-            }
-            wingPart.materials = wingMaterials;
-        }
-        foreach(MeshRenderer bodyPart in BodyParts)
-        {
-            Material[] GOMaterials = bodyPart.materials;
+            Material[] GOMaterials = meshRenderer.materials;
             Material[] bodyMaterials = new Material[Moth.Wings.Length + GOMaterials.Length];
             int i = 0;
-            foreach(Material bodyMaterial in Moth.Body)
+            foreach(Material bodyMaterial in materials)
             {
                 bodyMaterials[i] = bodyMaterial;
                 i++;
@@ -44,8 +33,9 @@ public class MothController : MonoBehaviour
                 bodyMaterials[i] = bodyMaterial;
                 i++;
             }
-            bodyPart.materials = bodyMaterials;
+            meshRenderer.materials = bodyMaterials;
         }
+
     }
 
     private void Update()
